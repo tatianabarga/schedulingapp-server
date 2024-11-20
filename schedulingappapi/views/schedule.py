@@ -26,13 +26,14 @@ class ScheduleViewSet(ViewSet):
      
   def create(self, request):
     user = User.objects.get(id=request.data['user'])
-    serializer = ScheduleSerializer(data=request.data)
     
-    schedule = [ ...schedule, user ] # probably did this wrong
+    schedule = Schedule.objects.create(
+      label=request.data['label'],
+      user=user,
+    )
     
-    if serializer.is_valid():
-      schedule = serializer.save() # why gray?
-      return Response(serializer.data)
+    serializer = ScheduleSerializer(schedule)
+    return Response(serializer.data)
     
   # make update function
   
