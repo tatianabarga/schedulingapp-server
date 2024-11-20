@@ -35,6 +35,10 @@ class DayView(ViewSet):
     
     serializer = DaySerializer(day)
     return Response(serializer.data)
+  
+  # make update
+  
+  # make destroy
     
 class DaySerializer(serializers.ModelSerializer):
   class Meta:
