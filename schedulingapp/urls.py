@@ -15,7 +15,19 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
+from django.conf.urls import include
+# from ethosapi.views import register_user, check_user
+from django.contrib import admin
+from rest_framework import routers
+from schedulingappapi.views import UserView, ScheduleView, DayView, TaskView
+
+router = routers.DefaultRouter(trailing_slash=False)
+router.register(r'user', UserView, 'user')
+router.register(r'schedule', ScheduleView, 'schedule')
+router.register(r'day', DayView, 'day')
+router.register(r'task', TaskView, 'task')
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('', include(router.urls)),
 ]

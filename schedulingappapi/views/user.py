@@ -34,4 +34,4 @@ class UserView(ViewSet):
 class UserSerializer(serializers.ModelSerializer):
   class Meta:
     model = User
-    feilds = '__all__'
+    fields = '__all__'

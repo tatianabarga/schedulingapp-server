@@ -43,6 +43,7 @@ class TaskView(ViewSet):
       schedule = schedule,
     )
     serializer = TaskSerializer(task)
+    return Response(serializer.data)
     
   # make update function 
   
@@ -52,4 +53,4 @@ class TaskView(ViewSet):
 class TaskSerializer(serializers.ModelSerializer):
   class Meta:
     model = Task
-    feilds = '__all__'
+    fields = '__all__'
