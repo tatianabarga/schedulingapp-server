@@ -21,7 +21,8 @@ class UserView(ViewSet):
   
   def create(self, request):
     user = User.objects.create(
-      uid=request.data["uid"]
+      uid=request.data["uid"],
+      name=request.data["name"]
     )
     serializer = UserSerializer(user)
     return Response(serializer.data, status=status.HTTP_201_CREATED)
