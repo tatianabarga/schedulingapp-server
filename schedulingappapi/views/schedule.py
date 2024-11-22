@@ -29,6 +29,7 @@ class ScheduleView(ViewSet):
     
     schedule = Schedule.objects.create(
       label=request.data['label'],
+      dates=request.data['dates'],
       user=user,
     )
     
