@@ -19,7 +19,7 @@ class ScheduleView(ViewSet):
     
     user = request.query_params.get('user', None)
     if user is not None:
-      schedules = schedules.filter(uid=user)
+      schedules = schedules.filter(user_id=user)
       
     serializer = ScheduleSerializer(schedules, many=True)
     return Response(serializer.data)
