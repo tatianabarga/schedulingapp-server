@@ -4,11 +4,11 @@ from django.shortcuts import get_object_or_404
 from rest_framework import serializers, status
 from schedulingappapi.models import Schedule, User
 
-class ScheduleViewSet(ViewSet):
+class ScheduleView(ViewSet):
   def retrieve(self, request, pk):
     try:
       schedule = Schedule.objects.get(pk=pk)
-      serializer = ScheduleSerializer
+      serializer = ScheduleSerializer(schedule)
       return Response(serializer.data)
     except Schedule.DoesNotExist as ex:
       return Response({'message': 'schedule not found'}, status=status.HTTP_404_NOT_FOUND)
@@ -19,7 +19,7 @@ class ScheduleViewSet(ViewSet):
     
     user = request.query_params.get('user', None)
     if user is not None:
-      schedules = schedules.filter(uid=user)
+      schedules = schedules.filter(user_id=user)
       
     serializer = ScheduleSerializer(schedules, many=True)
     return Response(serializer.data)
@@ -29,6 +29,7 @@ class ScheduleViewSet(ViewSet):
     
     schedule = Schedule.objects.create(
       label=request.data['label'],
+      dates=request.data['dates'],
       user=user,
     )
     
