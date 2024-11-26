@@ -41,6 +41,7 @@ class TaskView(ViewSet):
       day = day,
       user = user,
       schedule = schedule,
+      label = request.data['label'],
     )
     serializer = TaskSerializer(task)
     return Response(serializer.data)
