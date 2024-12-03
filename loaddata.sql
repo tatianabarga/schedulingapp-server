@@ -1,0 +1,2 @@
+
+ALTER TABLE tasks MODIFY day_id INT NULL;

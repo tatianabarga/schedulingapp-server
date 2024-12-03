@@ -29,8 +29,10 @@ class TaskView(ViewSet):
   
   def create(self, request):
     schedule = Schedule.objects.get(id=request.data['schedule'])
-    day = Day.objects.get(id=request.data['day'])
     user = User.objects.get(id=request.data['user'])
+    day = None
+    if 'day' in request.data and request.data['day']:
+      day = Day.objects.get(id=request.data['day'])
     
     task = Task.objects.create(
       start_time=request.data['start_time'],
@@ -41,6 +43,7 @@ class TaskView(ViewSet):
       day = day,
       user = user,
       schedule = schedule,
+      label = request.data['label'],
     )
     serializer = TaskSerializer(task)
     return Response(serializer.data)
