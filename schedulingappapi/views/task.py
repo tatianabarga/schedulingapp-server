@@ -31,15 +31,32 @@ class TaskView(ViewSet):
     schedule = Schedule.objects.get(id=request.data['schedule'])
     user = User.objects.get(id=request.data['user'])
     day = None
+    start_time = None
+    end_time = None
+    category = None
+    duration = None
+    
     if 'day' in request.data and request.data['day']:
       day = Day.objects.get(id=request.data['day'])
+      
+    if 'start_time' in request.data and request.data['start_time']:
+      start_time = request.data['start_time']
+      
+    if 'end_time' in request.data and request.data['end_time']:
+      end_time = request.data['end_time']
+      
+    if 'category' in request.data and request.data['category']:
+      category = request.data['category']
+      
+    if 'duration' in request.data and request.data['duration']:
+      duration = request.data['duration']
     
     task = Task.objects.create(
-      start_time=request.data['start_time'],
-      end_time=request.data['end_time'],
+      start_time=start_time,
+      end_time=end_time,
       locked_status = request.data['locked_status'],
-      category = request.data['category'],
-      duration = request.data['duration'],
+      category = category,
+      duration = duration,
       day = day,
       user = user,
       schedule = schedule,
