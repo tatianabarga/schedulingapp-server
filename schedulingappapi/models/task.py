@@ -8,7 +8,7 @@ class Task(models.Model):
   duration = models.TimeField() # what am i doing here??
   start_time = models.TimeField() # what am i doing here??
   end_time = models.TimeField() # what am i doing here?? do i need this?
-  day = models.ForeignKey(Day, on_delete=models.CASCADE)
+  day = models.ForeignKey(Day, on_delete=models.CASCADE, null=True, blank=True) 
   schedule = models.ForeignKey(Schedule, on_delete=models.CASCADE) # might change this to many to many later idk. if so REMOVE ON DELETE CASCADE
   user = models.ForeignKey(User, on_delete=models.CASCADE)
   locked_status = models.BooleanField()
