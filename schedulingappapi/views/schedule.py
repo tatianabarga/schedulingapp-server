@@ -2,7 +2,7 @@ from rest_framework.viewsets import ViewSet
 from rest_framework.response import Response
 from django.shortcuts import get_object_or_404
 from rest_framework import serializers, status
-from schedulingappapi.models import Schedule, User
+from schedulingappapi.models import Schedule, User, Day
 
 class ScheduleView(ViewSet):
   def retrieve(self, request, pk):
@@ -30,6 +30,55 @@ class ScheduleView(ViewSet):
     schedule = Schedule.objects.create(
       label=request.data['label'],
       dates=request.data['dates'],
+      user=user,
+    )
+    
+    sunday = Day.objects.create(
+      schedule=schedule,
+      weekday='Sunday',
+      date='2000-11-14', # TODO: fix this once date selection for schedules is configured
+      user=user,
+    )
+    
+    monday = Day.objects.create(
+      schedule=schedule,
+      weekday='Monday',
+      date='2000-11-14', # TODO: fix this once date selection for schedules is configured
+      user=user,
+    )
+    
+    tuesday = Day.objects.create(
+      schedule=schedule,
+      weekday='Tuesday',
+      date='2000-11-14', # TODO: fix this once date selection for schedules is configured
+      user=user,
+    )
+    
+    wednesday = Day.objects.create(
+      schedule=schedule,
+      weekday='Wednesday',
+      date='2000-11-14', # TODO: fix this once date selection for schedules is configured
+      user=user,
+    )
+    
+    thursday = Day.objects.create(
+      schedule=schedule,
+      weekday='Thursday',
+      date='2000-11-14', # TODO: fix this once date selection for schedules is configured
+      user=user,
+    )
+    
+    friday = Day.objects.create(
+      schedule=schedule,
+      weekday='Friday',
+      date='2000-11-14', # TODO: fix this once date selection for schedules is configured
+      user=user,
+    )
+    
+    saturday = Day.objects.create(
+      schedule=schedule,
+      weekday='Saturday',
+      date='2000-11-14', # TODO: fix this once date selection for schedules is configured
       user=user,
     )
     
