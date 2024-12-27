@@ -1,8 +1,10 @@
 from rest_framework.viewsets import ViewSet
 from rest_framework.response import Response
 from django.shortcuts import get_object_or_404
+from rest_framework.decorators import action
 from rest_framework import serializers, status
 from schedulingappapi.models import Schedule, User, Day
+from django.core.exceptions import ObjectDoesNotExist
 
 class ScheduleView(ViewSet):
   def retrieve(self, request, pk):
@@ -84,8 +86,26 @@ class ScheduleView(ViewSet):
     
     serializer = ScheduleSerializer(schedule)
     return Response(serializer.data)
-    
-  # make update function
+
+  @action(detail=True, methods=['patch'], url_path='add_goal/(?P<schedule_id>[^/.]+)')
+  def add_goal(self, request, pk, schedule_id):
+    try:
+      new_goal = request.data.get('goal',  '').strip()
+      if not new_goal:
+        return Response({"error": "Goal is required"}, status=status.HTTP_400_BAD_REQUEST)
+
+      schedule = Schedule.objects.get(user_id=pk, schedule_id=schedule_id)
+      
+      if schedule.goals == '': # == ?
+        schedule.goals = new_goal
+      else:
+        schedule.goals += f" -- {new_goal}"
+        
+      schedule.save
+        
+      return Response(None, status=status.HTTP_200_OK)
+    except ObjectDoesNotExist:
+      return Response({"error": "Schedule not found"}, status=status.HTTP_404_NOT_FOUND)
   
   def destroy(self, request, pk):
     try:
